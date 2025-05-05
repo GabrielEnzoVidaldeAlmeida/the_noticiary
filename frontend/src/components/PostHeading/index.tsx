@@ -13,7 +13,7 @@ export default function PostHeading({
   as: Tag = "h2",
 }: PostHeadingProps) {
   const headingClassesMap = {
-    h1: "text-2xl/tight font-extrabold sm:text-4xl",
+    h1: "text-2xl/tight font-extrabold sm:text-2xl",
     h2: "text-2xl/tight font-bold",
   };
 

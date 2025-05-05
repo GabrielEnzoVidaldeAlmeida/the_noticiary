@@ -1,7 +1,8 @@
-import { PostCoverImage } from "@/components/PostCoverImage";
 import PostHeading from "@/components/PostHeading";
 import axios from "axios";
 import clsx from "clsx";
+import Image from "next/image";
+import Link from "next/link";
 
 async function api() {
   let url = "http://127.0.0.1:8000/api/news/";
@@ -31,31 +32,37 @@ export default async function Home() {
         News
       </h2>
 
-      <section className="grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group">
-        <PostCoverImage
-          linkProps={{
-            href: "/post/akjdsa",
-          }}
-          imageProps={{
-            width: 1200,
-            height: 720,
-            src: "/images/bryen_9.png",
-            alt: "Alt da imagem",
-            priority: true,
-          }}
-        />
+      <section className="flex flex-col items-center justify-center gap-8">
+        <div className="border-b-2 pb-2 w-80 sm:w-full">
+          <Link href="/" className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-shrink-0">
+              <Image
+                src="/images/bryen_9.png"
+                alt="Zoom interno"
+                width={320}
+                height={180}
+                className="object-cover object-center rounded-xl"
+                priority
+              />
+            </div>
 
-        <div className="flex flex-col gap-4 sm:justify-center">
-          <time className="text-slate-600 text-sm/tight" dateTime="2025-04-20">
-            20/04/2025 10:00
-          </time>
-          <PostHeading as="h1" url="#">
-            Doloribus modi provident laboriosam deserunt est
-          </PostHeading>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat iusto
-          vero, perferendis enim recusandae dolores. Doloribus modi provident
-          laboriosam deserunt est consequatur consequuntur, amet velit illo
-          alias molestias, sunt laborum.
+            <div className="flex flex-col justify-center">
+              <time
+                className="text-slate-600 text-sm/tight"
+                dateTime="2025-04-20"
+              >
+                20/04/2025 10:00
+              </time>
+              <PostHeading as="h2" url="/">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.!
+              </PostHeading>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Incidunt dicta ipsa nihil alias culpa perspiciatis libero hic
+                similique eaque ullam dignissimos amet obcaecati.
+              </p>
+            </div>
+          </Link>
         </div>
       </section>
     </div>
