@@ -33,6 +33,9 @@ export default function RootLayout({
           <NavBar />
         </header>
         <Container>{children}</Container>
+        <footer className="bg-black py-2 mt-2 text-slate-100">
+          ESSE É UM FOOTER
+        </footer>
       </body>
     </html>
   );
