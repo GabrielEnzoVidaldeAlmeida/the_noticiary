@@ -1,11 +1,14 @@
 from django.db import models
 
-# Create your models here.
 class News(models.Model):
     name = models.CharField(max_length=255)
+    content = models.TextField()
+    description = models.TextField()
+    image = models.ImageField(upload_to='news_images/')
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'Notíicia'
+        verbose_name = 'Notícia'
         verbose_name_plural = 'Notícias'
 
     def __str__(self):
