@@ -38,8 +38,12 @@ export default async function NewsDetailPage({
           <article className="whitespace-pre-line">{newsItem.content}</article>
         </div>
         <div className="flex justify-end gap-4 mt-12">
-          <BoltIcon className="text-gray-500" />
-          <TrashIcon className="text-red-700" />
+          <button>
+            <BoltIcon className="text-gray-500 cursor-pointer" />
+          </button>
+          <button>
+            <TrashIcon className="text-red-700 cursor-pointer" />
+          </button>
         </div>
       </div>
     </div>
