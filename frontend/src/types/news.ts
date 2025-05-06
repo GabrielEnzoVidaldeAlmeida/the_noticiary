@@ -1,4 +1,3 @@
-// types/news.ts
 export interface NewsItem {
   id: number;
   name: string;

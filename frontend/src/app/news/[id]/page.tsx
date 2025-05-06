@@ -1,14 +1,64 @@
-import { getNewsItem } from "@/lib/api";
+"use client";
+
+import { getNewsItem, deleteNewsItem } from "@/lib/api";
+import { NewsItem } from "@/types/news";
 import { BoltIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState, useEffect, use } from "react";
 
-export default async function NewsDetailPage({
+export default function NewsDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const newsItem = await getNewsItem(id);
+  const { id } = use(params);
+  const router = useRouter();
+  const [newsItem, setNewsItem] = useState<NewsItem | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await getNewsItem(id);
+        setNewsItem(data);
+      } catch (err) {
+        console.error("Erro ao carregar notícia:", err);
+        setError("Erro ao carregar notícia");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadData();
+  }, [id]);
+
+  const handleDelete = async () => {
+    if (!confirm("Tem certeza que deseja excluir esta notícia?")) return;
+
+    setIsDeleting(true);
+    setError("");
+
+    try {
+      const success = await deleteNewsItem(id);
+      if (success) {
+        router.push("/");
+        router.refresh();
+      } else {
+        setError("Falha ao excluir notícia");
+      }
+    } catch (err) {
+      setError("Erro ao excluir notícia");
+      console.error(err);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  if (isLoading) {
+    return <div className="text-center p-8">Carregando...</div>;
+  }
 
   if (!newsItem) {
     return <div className="text-center p-8">Notícia não encontrada</div>;
@@ -41,10 +91,16 @@ export default async function NewsDetailPage({
           <button>
             <BoltIcon className="text-gray-500 cursor-pointer" />
           </button>
-          <button>
+          <button
+            onClick={handleDelete}
+            disabled={isDeleting}
+            className="disabled:opacity-50 flex items-center gap-1"
+          >
             <TrashIcon className="text-red-700 cursor-pointer" />
+            {isDeleting && <span>Excluindo...</span>}
           </button>
         </div>
+        {error && <div className="mt-4 text-red-600 text-center">{error}</div>}
       </div>
     </div>
   );
