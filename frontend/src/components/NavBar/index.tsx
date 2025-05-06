@@ -11,7 +11,7 @@ export default function NavBar() {
       </Link>
 
       <Link
-        href="#"
+        href="news/create"
         className="text-slate-100 font-extrabold flex items-center gap-1 hover:brightness-75 transition"
       >
         <PlusIcon className="stroke-3 w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5" />
