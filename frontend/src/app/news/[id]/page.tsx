@@ -56,6 +56,10 @@ export default function NewsDetailPage({
     }
   };
 
+  const handleEdit = () => {
+    router.push(`/news/${id}/edit`);
+  };
+
   if (isLoading) {
     return <div className="text-center p-8">Carregando...</div>;
   }
@@ -88,7 +92,7 @@ export default function NewsDetailPage({
           <article className="whitespace-pre-line">{newsItem.content}</article>
         </div>
         <div className="flex justify-end gap-4 mt-12">
-          <button>
+          <button onClick={handleEdit}>
             <BoltIcon className="text-gray-500 cursor-pointer" />
           </button>
           <button

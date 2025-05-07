@@ -34,7 +34,7 @@ class NewsUpdateView(generics.GenericAPIView):
 
     def put(self, request, *args, **kwargs):
         news_instance = self.get_object(pk=kwargs["id"])
-        serializer = NewsSerializer(news_instance, data=request.data)
+        serializer = NewsSerializer(news_instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"news": serializer.data})
