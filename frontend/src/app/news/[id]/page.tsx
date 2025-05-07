@@ -73,7 +73,7 @@ export default function NewsDetailPage({
   return (
     <div className="flex justify-center p-4">
       <div className="w-full max-w-4xl">
-        <h1 className="text-3xl font-extrabold mb-6 text-center md:text-left">
+        <h1 className="text-2xl md:text-3xl font-extrabold mb-6 text-center md:text-left">
           {newsItem.name}
         </h1>
         <div className="flex justify-center mb-8">

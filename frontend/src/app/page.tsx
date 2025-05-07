@@ -34,9 +34,7 @@ export default async function Home() {
                 >
                   {new Date(item.created_at).toLocaleString("pt-BR")}
                 </time>
-                <PostHeading as="h2" url={`/news/${item.id}`}>
-                  {item.name}
-                </PostHeading>
+                <PostHeading as="h2">{item.name}</PostHeading>
                 <p>{item.description}</p>
               </div>
             </Link>

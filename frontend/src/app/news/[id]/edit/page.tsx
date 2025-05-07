@@ -87,11 +87,11 @@ export default function NewsEdit() {
         const backendErrors = err.response.data;
         let errorMessages: string[] = [];
 
-        if (typeof backendErrors === 'object' && backendErrors !== null) {
+        if (typeof backendErrors === "object" && backendErrors !== null) {
           for (const field in backendErrors) {
             if (Object.prototype.hasOwnProperty.call(backendErrors, field)) {
               const messages = Array.isArray(backendErrors[field])
-                ? backendErrors[field].join(' ')
+                ? backendErrors[field].join(" ")
                 : String(backendErrors[field]);
               let fieldName = field;
               if (field === "name") fieldName = "Título";
@@ -105,14 +105,20 @@ export default function NewsEdit() {
         }
 
         if (errorMessages.length > 0) {
-          setApiError(`Por favor, corrija os seguintes erros: ${errorMessages.join('; ')}`);
+          setApiError(
+            `Por favor, corrija os seguintes erros: ${errorMessages.join("; ")}`
+          );
         } else if (err.response.statusText && err.response.status) {
-          setApiError(`Erro ${err.response.status}: ${err.response.statusText}.`);
+          setApiError(
+            `Erro ${err.response.status}: ${err.response.statusText}.`
+          );
         } else {
           setApiError("Erro desconhecido.");
         }
       } else if (err.request) {
-        setApiError("Erro ao atualizar notícia: Nenhuma resposta do servidor. Verifique sua conexão.");
+        setApiError(
+          "Erro ao atualizar notícia: Nenhuma resposta do servidor. Verifique sua conexão."
+        );
       } else {
         setApiError(`Erro ao atualizar notícia: ${err.message}`);
       }
@@ -120,10 +126,12 @@ export default function NewsEdit() {
   };
 
   if (loading) {
-    return <div className="text-center p-8">Carregando dados da notícia...</div>;
+    return (
+      <div className="text-center p-8">Carregando dados da notícia...</div>
+    );
   }
 
-  if (apiError && !newsItemData) { 
+  if (apiError && !newsItemData) {
     return <div className="text-red-600 text-center p-8">{apiError}</div>;
   }
 
@@ -138,83 +146,99 @@ export default function NewsEdit() {
       </h1>
 
       {apiError && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+          role="alert"
+        >
           <strong className="font-bold">Erro!</strong>
           <span className="block sm:inline"> {apiError}</span>
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-         <div>
-           <label htmlFor="name" className="block mb-2 text-gray-700">Título</label>
-           <input
-             id="name"
-             type="text"
-             name="name"
-             value={formData.name}
-             onChange={handleChange}
-             className="w-full p-2 border rounded text-gray-700 focus:ring focus:ring-blue-300 focus:outline-none"
-             required
-           />
-         </div>
-
-         <div>
-           <label htmlFor="description" className="block mb-2 text-gray-700">Descrição</label>
-           <input
-            id="description"
-             type="text"
-             name="description"
-             value={formData.description}
-             onChange={handleChange}
-             className="w-full p-2 border rounded text-gray-700 focus:ring focus:ring-blue-300 focus:outline-none"
-             required
-           />
-         </div>
-
-         <div>
-           <label htmlFor="content" className="block mb-2 text-gray-700">Conteúdo</label>
-           <textarea
-            id="content"
-             name="content"
-             value={formData.content}
-             onChange={handleChange}
-             className="w-full p-2 border rounded h-40 text-gray-700 focus:ring focus:ring-blue-300 focus:outline-none"
-             required
-           />
-         </div>
+        <div>
+          <label htmlFor="name" className="block mb-1 font-extrabold">
+            Título
+          </label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full p-2 border rounded text-gray-700 focus:ring focus:ring-blue-300 focus:outline-none"
+            required
+          />
+        </div>
 
         <div>
-          <label htmlFor="image" className="block mb-2 text-gray-700">Imagem</label>
+          <label htmlFor="description" className="block mb-1 font-extrabold">
+            Descrição
+          </label>
+          <input
+            id="description"
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full p-2 border rounded text-gray-700 focus:ring focus:ring-blue-300 focus:outline-none"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="content" className="block mb-1 font-extrabold">
+            Conteúdo
+          </label>
+          <textarea
+            id="content"
+            name="content"
+            value={formData.content}
+            onChange={handleChange}
+            className="w-full p-2 border rounded h-40 text-gray-700 focus:ring focus:ring-blue-300 focus:outline-none"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="image" className="block mb-1 font-extrabold">
+            Imagem
+          </label>
           <input
             id="image"
             type="file"
             name="image"
             onChange={handleFileChange}
-            className="w-full p-2 border rounded text-gray-700 focus:ring focus:ring-blue-300 focus:outline-none"
+            className="w-full p-2 border rounded text-gray-700 focus:ring focus:ring-blue-300 focus:outline-none cursor-pointer"
             accept="image/*"
           />
           {!formData.image && newsItemData.image && (
             <div className="mt-2">
-              <label className="block mb-1 text-gray-700">Imagem atual:</label>
+              <label className="block mb-1 font-extrabold">Imagem atual:</label>
               <img
                 src={`http://127.0.0.1:8000${newsItemData.image}`}
                 alt={newsItemData.name}
                 className="max-h-40 rounded object-cover"
               />
               <p className="text-sm text-gray-500 mt-1">
-                Selecione um novo arquivo para substituir a imagem atual. Se nenhum arquivo for selecionado, a imagem atual será mantida.
+                Selecione um novo arquivo para substituir a imagem atual. Se
+                nenhum arquivo for selecionado, a imagem atual será mantida.
               </p>
             </div>
           )}
           {formData.image && (
             <div className="mt-2">
-                <label className="block mb-1 text-gray-700">Nova imagem selecionada:</label>
-                <img
-                    src={URL.createObjectURL(formData.image)}
-                    alt="Preview da nova imagem"
-                    className="max-h-40 rounded object-cover"
-                    onLoad={() => URL.revokeObjectURL(URL.createObjectURL(formData.image))}
-                />
+              <label className="block mb-1 text-gray-700">
+                Nova imagem selecionada:
+              </label>
+              <img
+                src={URL.createObjectURL(formData.image)}
+                alt="Preview da nova imagem"
+                className="max-h-40 rounded object-cover"
+                onLoad={() =>
+                  URL.revokeObjectURL(URL.createObjectURL(formData.image))
+                }
+              />
             </div>
           )}
         </div>
@@ -222,9 +246,9 @@ export default function NewsEdit() {
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline disabled:opacity-50"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline disabled:opacity-50 cursor-pointer"
         >
-          {loading ? 'Salvando...' : 'Salvar Alterações'}
+          {loading ? "Salvando..." : "Salvar Alterações"}
         </button>
       </form>
     </div>

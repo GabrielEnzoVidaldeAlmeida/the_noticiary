@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -54,14 +55,14 @@ export default function NewsCreate() {
   };
 
   return (
-    <div>
-      <h1 className="font-extrabold text-2xl sm:text-3xl md:text-4xl">
+    <div className="p-4">
+      <h1 className="font-extrabold text-2xl mb-6 sm:text-3xl md:text-4xl">
         Adicionar notícia:
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block mb-1">Título</label>
+          <label className="block mb-1 font-extrabold">Título</label>
           <input
             type="text"
             name="name"
@@ -73,7 +74,7 @@ export default function NewsCreate() {
         </div>
 
         <div>
-          <label className="block mb-1">Descrição</label>
+          <label className="block mb-1 font-extrabold">Descrição</label>
           <input
             type="text"
             name="description"
@@ -85,7 +86,7 @@ export default function NewsCreate() {
         </div>
 
         <div>
-          <label className="block mb-1">Conteúdo</label>
+          <label className="block mb-1 font-extrabold">Conteúdo</label>
           <textarea
             name="content"
             value={formData.content}
@@ -96,19 +97,22 @@ export default function NewsCreate() {
         </div>
 
         <div>
-          <label className="block mb-1">Imagem</label>
+          <label className="block mb-1 font-extrabold">Imagem</label>
           <input
             type="file"
             name="image"
             onChange={handleFileChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded cursor-pointer"
             accept="image/*"
           />
         </div>
 
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className={clsx(
+            "bg-blue-500 text-white font-extrabold hover:bg-blue-600",
+            "px-4 py-2 rounded cursor-pointer"
+          )}
         >
           Criar Notícia
         </button>

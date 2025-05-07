@@ -1,15 +1,12 @@
 import clsx from "clsx";
-import Link from "next/link";
 
 type PostHeadingProps = {
   children: React.ReactNode;
-  url: string;
   as: "h1" | "h2";
 };
 
 export default function PostHeading({
   children,
-  url,
   as: Tag = "h2",
 }: PostHeadingProps) {
   const headingClassesMap = {
@@ -21,9 +18,7 @@ export default function PostHeading({
 
   return (
     <Tag className={clsx(headingClassesMap[Tag], commonClasses)}>
-      <Link href={url} className="group-hover:text-slate-600 transition">
-        {children}
-      </Link>
+      <div className="group-hover:text-slate-600 transition">{children}</div>
     </Tag>
   );
 }
